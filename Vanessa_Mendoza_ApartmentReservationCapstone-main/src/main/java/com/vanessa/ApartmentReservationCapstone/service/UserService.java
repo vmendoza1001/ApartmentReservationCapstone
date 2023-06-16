@@ -6,13 +6,18 @@ import com.vanessa.ApartmentReservationCapstone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     public User createUser(User user) throws Exception {
         if(userRepository.findByUsername(user.getUsername()) != null){
             throw new Exception("Username already exists");
@@ -36,5 +41,8 @@ public class UserService {
             throw new UserNotFoundException(id);
         }
         userRepository.deleteById(id);
+    }
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

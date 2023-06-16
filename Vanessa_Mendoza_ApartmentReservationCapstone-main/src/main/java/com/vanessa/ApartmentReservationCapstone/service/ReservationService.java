@@ -8,6 +8,8 @@ import com.vanessa.ApartmentReservationCapstone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReservationService {
 
@@ -16,7 +18,10 @@ public class ReservationService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    public ReservationService(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
+    }
     public Reservation createReservation(Reservation reservation) throws Exception, UserNotFoundException {
         if(reservation.getUser() == null || userRepository.findById(reservation.getUser().getId()).isEmpty()){
             throw new UserNotFoundException(reservation.getUser().getId());
@@ -43,5 +48,8 @@ public class ReservationService {
             throw new ReservationNotFoundException(id);
         }
         reservationRepository.deleteById(id);
+    }
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
     }
 }

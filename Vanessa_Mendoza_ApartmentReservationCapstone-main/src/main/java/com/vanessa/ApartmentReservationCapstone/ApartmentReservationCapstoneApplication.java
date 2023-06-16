@@ -1,7 +1,5 @@
 package com.vanessa.ApartmentReservationCapstone;
 
-
-
 import com.vanessa.ApartmentReservationCapstone.model.Reservation;
 import com.vanessa.ApartmentReservationCapstone.model.User;
 import com.vanessa.ApartmentReservationCapstone.service.ReservationService;
@@ -11,14 +9,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Repository;
-import org.springframework.context.annotation.Bean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SpringBootApplication(scanBasePackages = "com.vanessa")
-
 @ComponentScan(basePackages = "com.vanessa")
 public class ApartmentReservationCapstoneApplication implements CommandLineRunner {
 
@@ -42,19 +37,34 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 
 		Reservation newReservation = createReservation(newUser);
 		System.out.println("Created Reservation: " + newReservation);
+
+		testGetUser();
 	}
 
 	private User createUser() throws Exception {
-		User user = new User("NCalabrese", "SunnyFlower$", "Nuntapak", "Calabrese", "64 E Bay Street", "555-9922", "pchen01@email.com");
+		User user = new User("MLars11", "WeistFlower$", "Grace", "Pate", "33 Market Street", "555-8668", "vtpo01@email.com");
 		return userService.createUser(user);
 	}
 
 	private Reservation createReservation(User user) throws Exception {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		Date startDate = dateFormat.parse("09/01/2023");
-		Date endDate = dateFormat.parse("09/07/2023");
+		Date startDate = dateFormat.parse("1/28/2023");
+		Date endDate = dateFormat.parse("1/29/2023");
 
-		Reservation reservation = new Reservation("R5434", 4, startDate, endDate, user);
+		Reservation reservation = new Reservation("R5440", 3, startDate, endDate, user);
 		return reservationService.createReservation(reservation);
+	}
+
+	private void testGetUser() {
+		User user = userService.getUser(4);
+
+		if (user != null) {
+			System.out.println("User Details: " + user.getId() + " | " + user.getFirstName() +
+					" | " + user.getLastName() + " | " + user.getEmailAddress());
+
+
+		} else {
+			System.out.println("User not found!");
+		}
 	}
 }

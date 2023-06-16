@@ -1,4 +1,4 @@
-package com.vanessa.ApartmentReservationCapstone.controller;
+package com.vanessa.ApartmentReservationCapstone.restcontroller;
 
 import com.vanessa.ApartmentReservationCapstone.exception.UserNotFoundException;
 import com.vanessa.ApartmentReservationCapstone.model.User;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class RestUserController {
 
     @Autowired
     private UserService userService;

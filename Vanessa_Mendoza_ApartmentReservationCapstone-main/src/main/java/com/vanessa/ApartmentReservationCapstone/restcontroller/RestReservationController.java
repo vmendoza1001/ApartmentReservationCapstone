@@ -1,4 +1,4 @@
-package com.vanessa.ApartmentReservationCapstone.controller;
+package com.vanessa.ApartmentReservationCapstone.restcontroller;
 
 import com.vanessa.ApartmentReservationCapstone.exception.ReservationNotFoundException;
 import com.vanessa.ApartmentReservationCapstone.exception.UserNotFoundException;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class ReservationController {
+public class RestReservationController {
 
     @Autowired
     private ReservationService reservationService;

@@ -3,18 +3,18 @@ package com.vanessa.ApartmentReservationCapstone.service;
 import com.vanessa.ApartmentReservationCapstone.exception.UserNotFoundException;
 import com.vanessa.ApartmentReservationCapstone.model.User;
 import com.vanessa.ApartmentReservationCapstone.repository.UserRepository;
-import com.vanessa.ApartmentReservationCapstone.service.UserService;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
     @Mock
@@ -22,12 +22,6 @@ class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     void createUser_ValidUser_ReturnsCreatedUser() throws Exception {
         // Arrange
@@ -56,8 +50,8 @@ class UserServiceTest {
     @Test
     void getUser_ExistingId_ReturnsUser() throws UserNotFoundException {
         // Arrange
-        int userId = 1;
-        User user = new User("testuser", "password", "John", "Doe", "123 Main St", "1234567890", "john.doe@example.com");
+        int userId = 4;
+        User user = new User("MDunberry09", "SunnyFlower$", "Nuntapak", "Calabrese", "64 E Bay Street", "555-9922", "pchen01@email.com");
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
         // Act
@@ -101,6 +95,9 @@ class UserServiceTest {
         // Arrange
         User nonExistingUser = new User("nonexisting", "password", "Jane", "Smith", "456 Elm St", "9876543210", "jane.smith@example.com");
         when(userRepository.findById(nonExistingUser.getId())).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(UserNotFoundException.class, () -> userService.updateUser(nonExistingUser));
     }
 
     @Test
@@ -127,10 +124,4 @@ class UserServiceTest {
         assertThrows(UserNotFoundException.class, () -> userService.deleteUser(nonExistingUserId));
         verify(userRepository, never()).deleteById(nonExistingUserId);
     }
-
 }
-
-
-
-
-
