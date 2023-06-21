@@ -42,7 +42,7 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 	}
 
 	private User createUser() throws Exception {
-		User user = new User("MLars11", "WeistFlower$", "Grace", "Pate", "33 Market Street", "555-8668", "vtpo01@email.com");
+		User user = new User("MLars11", "WeistFlower$", "Grace Pate", "33 Market Street", "555-8668", "vtpo01@email.com");
 		return userService.createUser(user);
 	}
 
@@ -56,11 +56,11 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 	}
 
 	private void testGetUser() {
-		User user = userService.getUser(4);
+		User user = userService.getUserByFullName("Priscilla Chen");
 
 		if (user != null) {
-			System.out.println("User Details: " + user.getId() + " | " + user.getFirstName() +
-					" | " + user.getLastName() + " | " + user.getEmailAddress());
+			System.out.println("User Details: " + user.getId() + " | " + user.getFullName() +
+					" | " + user.getEmailAddress());
 
 
 		} else {

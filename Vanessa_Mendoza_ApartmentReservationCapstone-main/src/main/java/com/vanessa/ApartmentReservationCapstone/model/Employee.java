@@ -1,19 +1,18 @@
 package com.vanessa.ApartmentReservationCapstone.model;
 
-
 import jakarta.persistence.*;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
+@Table(name = "employees")
 
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     @Column(nullable = false)
     @NotBlank(message = "Username cannot be blank")
     @Size(min = 7, max = 15, message = "Username must be between 7 and 15 characters")
@@ -25,6 +24,9 @@ public class User {
     @NotBlank(message = "Name cannot be blank")
     private String fullName;
     @Column(nullable = false)
+    @NotBlank(message = "Role cannot be blank")
+    private String role;
+    @Column(nullable = false)
     @NotBlank(message = "Address cannot be blank")
     private String homeAddress;
     @Column(nullable = false)
@@ -34,25 +36,25 @@ public class User {
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email cannot be blank")
     private String emailAddress;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservations;
+    public Employee() {
+    }
 
-    public User() {}
-
-    public User(String username, String password, String fullName, String homeAddress, String phoneNumber, String emailAddress) {
+    public Employee(String username, String password, String fullName,
+                    String role, String homeAddress, String phoneNumber, String emailAddress) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+        this.role = role;
         this.homeAddress = homeAddress;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -76,8 +78,16 @@ public class User {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFullName(String firstName) {
+        this.fullName = firstName;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getHomeAddress() {
@@ -102,25 +112,5 @@ public class User {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", homeAddress='" + homeAddress + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                '}';
     }
 }

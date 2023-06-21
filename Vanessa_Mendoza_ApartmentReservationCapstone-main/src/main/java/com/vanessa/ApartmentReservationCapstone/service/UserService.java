@@ -8,41 +8,39 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class UserService {
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    public User createUser(User user) throws Exception {
-        if(userRepository.findByUsername(user.getUsername()) != null){
-            throw new Exception("Username already exists");
-        }
-        return userRepository.save(user);
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public User getUser(Integer id) throws UserNotFoundException {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    public User getUserByFullName(String fullName) throws UserNotFoundException {
+        return userRepository.findByFullName(fullName)
+                .orElseThrow(() -> new UserNotFoundException(fullName));
+    }
+
+    public User createUser(User user) {
+        return userRepository.save(user);
     }
 
     public User updateUser(User user) throws UserNotFoundException {
-        if(userRepository.findById(user.getId()).isEmpty()){
-            throw new UserNotFoundException(user.getId());
+        if (!userRepository.existsByFullName(user.getFullName())) {
+            throw new UserNotFoundException(user.getFullName());
         }
         return userRepository.save(user);
     }
 
-    public void deleteUser(Integer id) throws UserNotFoundException {
-        if(userRepository.findById(id).isEmpty()){
-            throw new UserNotFoundException(id);
+    public void deleteUser(String fullName) throws UserNotFoundException {
+        if (!userRepository.existsByFullName(fullName)) {
+            throw new UserNotFoundException(fullName);
         }
-        userRepository.deleteById(id);
-    }
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+        userRepository.deleteByFullName(fullName);
     }
 }

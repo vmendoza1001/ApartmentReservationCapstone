@@ -20,8 +20,8 @@ public class RestUserController {
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Integer id) throws UserNotFoundException {
-        return userService.getUser(id);
+    public User getUser(@PathVariable String fullName) throws UserNotFoundException {
+        return userService.getUserByFullName(fullName);
     }
 
     @PutMapping("/users")
@@ -30,7 +30,7 @@ public class RestUserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Integer id) throws UserNotFoundException {
-        userService.deleteUser(id);
+    public void deleteUser(@PathVariable String fullName) throws UserNotFoundException {
+        userService.deleteUser(fullName);
     }
 }
