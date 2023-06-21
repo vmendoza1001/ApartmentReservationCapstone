@@ -4,3 +4,7 @@
 
 ## June 14
 - No update observed
+
+## June 21
+- The problem mentioned above is resolved
+- No templates yet
