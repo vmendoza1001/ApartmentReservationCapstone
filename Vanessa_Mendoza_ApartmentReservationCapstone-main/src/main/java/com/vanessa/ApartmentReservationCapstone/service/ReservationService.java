@@ -24,7 +24,7 @@ public class ReservationService {
     }
     public Reservation createReservation(Reservation reservation) throws Exception, UserNotFoundException {
         if(reservation.getUser() == null || userRepository.findById(reservation.getUser().getId()).isEmpty()){
-            throw new UserNotFoundException(reservation.getUser().getId());
+            throw new UserNotFoundException(reservation.getUser().getFullName());
         }
         return reservationRepository.save(reservation);
     }
@@ -38,7 +38,7 @@ public class ReservationService {
             throw new ReservationNotFoundException(reservation.getId());
         }
         if(reservation.getUser() == null || userRepository.findById(reservation.getUser().getId()).isEmpty()){
-            throw new UserNotFoundException(reservation.getUser().getId());
+            throw new UserNotFoundException(reservation.getUser().getFullName());
         }
         return reservationRepository.save(reservation);
     }

@@ -3,125 +3,128 @@ package com.vanessa.ApartmentReservationCapstone.service;
 import com.vanessa.ApartmentReservationCapstone.exception.UserNotFoundException;
 import com.vanessa.ApartmentReservationCapstone.model.User;
 import com.vanessa.ApartmentReservationCapstone.repository.UserRepository;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+public class UserServiceTest {
+
+    private UserService userService;
 
     @Mock
     private UserRepository userRepository;
 
-    @InjectMocks
-    private UserService userService;
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        userService = new UserService(userRepository);
+    }
+
     @Test
-    void createUser_ValidUser_ReturnsCreatedUser() throws Exception {
+    public void testGetAllUsers() {
         // Arrange
-        User user = new User("testuser", "password", "John", "Doe", "123 Main St", "1234567890", "john.doe@example.com");
-        when(userRepository.findByUsername(user.getUsername())).thenReturn(null);
+        List<User> users = new ArrayList<>();
+        users.add(new User("Baily44", "Kangaroo6", "Baily Simmons", "456 9th Avenue, Brooklyn, NY 09857",
+                "532-987-8977", "baily@email.com"));
+        users.add(new User("Janice89", "Pyjamas880", "Janice Guerra", "879 Darby Street, Denver, Colorado 90998",
+                "780-897-8977", "janice@email.com"));
+        when(userRepository.findAll()).thenReturn(users);
+
+        // Act
+        List<User> result = userService.getAllUsers();
+
+        // Assert
+        assertEquals(2, result.size());
+        assertEquals("Baily Simmons", result.get(0).getFullName());
+        assertEquals("Janice Guerra", result.get(1).getFullName());
+    }
+
+    @Test
+    public void testGetUserByFullName_ValidFullName_ReturnsUser() {
+        // Arrange
+        String fullName = "Baily Simmons";
+        User user = new User("Baily44", "Kangaroo6", "Baily Simmons", "456 9th Avenue, Brooklyn, NY 09857",
+                "532-987-8977", "baily@email.com");
+        when(userRepository.findByFullName(fullName)).thenReturn(Optional.of(user));
+
+        // Act
+        User result = userService.getUserByFullName(fullName);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(fullName, result.getFullName());
+    }
+
+    @Test
+    public void testGetUserByFullName_NonExistingFullName_ThrowsUserNotFoundException() {
+        // Arrange
+        String fullName = "Non Existing User";
+        when(userRepository.findByFullName(fullName)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(UserNotFoundException.class, () -> userService.getUserByFullName(fullName));
+    }
+
+    @Test
+    public void testCreateUser_ValidUser_ReturnsCreatedUser() {
+        // Arrange
+        User user = new User("Baily44", "Kangaroo6", "Baily Simmons", "456 9th Avenue, Brooklyn, NY 09857",
+                "532-987-8977", "baily@email.com");
         when(userRepository.save(user)).thenReturn(user);
 
         // Act
-        User createdUser = userService.createUser(user);
+        User result = userService.createUser(user);
 
         // Assert
-        assertNotNull(createdUser);
-        assertEquals(user.getUsername(), createdUser.getUsername());
+        assertNotNull(result);
+        assertEquals("Baily Simmons", result.getFullName());
+        assertEquals("baily@email.com", result.getEmailAddress());
     }
 
     @Test
-    void createUser_ExistingUsername_ThrowsException() {
+    public void testUpdateUser_ExistingUser_ReturnsUpdatedUser() throws UserNotFoundException {
         // Arrange
-        User existingUser = new User("existinguser", "password", "Jane", "Smith", "456 Elm St", "9876543210", "jane.smith@example.com");
-        when(userRepository.findByUsername(existingUser.getUsername())).thenReturn(existingUser);
-
-        // Act & Assert
-        assertThrows(Exception.class, () -> userService.createUser(existingUser));
-    }
-
-    @Test
-    void getUser_ExistingId_ReturnsUser() throws UserNotFoundException {
-        // Arrange
-        int userId = 4;
-        User user = new User("MDunberry09", "SunnyFlower$", "Nuntapak", "Calabrese", "64 E Bay Street", "555-9922", "pchen01@email.com");
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        User user = new User("Baily44", "Kangaroo6", "Baily Simmons", "456 9th Avenue, Brooklyn, NY 09857",
+                "532-987-8977", "baily@email.com");
+        when(userRepository.existsByFullName(user.getFullName())).thenReturn(true);
+        when(userRepository.save(user)).thenReturn(user);
 
         // Act
-        User retrievedUser = userService.getUser(userId);
+        User result = userService.updateUser(user);
 
         // Assert
-        assertNotNull(retrievedUser);
-        assertEquals(userId, retrievedUser.getId());
+        assertNotNull(result);
+        assertEquals("Baily Simmons", result.getFullName());
+        assertEquals("baily@email.com", result.getEmailAddress());
     }
 
     @Test
-    void getUser_NonExistingId_ThrowsException() {
+    public void testUpdateUser_NonExistingUser_ThrowsUserNotFoundException() {
         // Arrange
-        int nonExistingUserId = 999;
-        when(userRepository.findById(nonExistingUserId)).thenReturn(Optional.empty());
+        User user = new User("Dale99", "Kangaroo6", "Dale Carnegie", "456 9th Avenue, Brooklyn, NY 09857",
+                "532-987-8977", "dale@email.com");
+        when(userRepository.existsByFullName(user.getFullName())).thenReturn(false);
 
         // Act & Assert
-        assertThrows(UserNotFoundException.class, () -> userService.getUser(nonExistingUserId));
+        assertThrows(UserNotFoundException.class, () -> userService.updateUser(user));
     }
 
     @Test
-    void updateUser_ExistingUser_ReturnsUpdatedUser() throws UserNotFoundException {
+    public void testDeleteUser_NonExistingUser_ThrowsUserNotFoundException() {
         // Arrange
-        User existingUser = new User("testuser", "password", "John", "Doe", "123 Main St", "1234567890", "john.doe@example.com");
-        when(userRepository.findById(existingUser.getId())).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(existingUser)).thenReturn(existingUser);
-
-        // Modify user details
-        existingUser.setFirstName("Updated");
-
-        // Act
-        User updatedUser = userService.updateUser(existingUser);
-
-        // Assert
-        assertNotNull(updatedUser);
-        assertEquals("Updated", updatedUser.getFirstName());
-    }
-
-    @Test
-    void updateUser_NonExistingUser_ThrowsException() {
-        // Arrange
-        User nonExistingUser = new User("nonexisting", "password", "Jane", "Smith", "456 Elm St", "9876543210", "jane.smith@example.com");
-        when(userRepository.findById(nonExistingUser.getId())).thenReturn(Optional.empty());
+        String fullName = "Non Existing User";
+        when(userRepository.existsByFullName(fullName)).thenReturn(false);
 
         // Act & Assert
-        assertThrows(UserNotFoundException.class, () -> userService.updateUser(nonExistingUser));
+        assertThrows(UserNotFoundException.class, () -> userService.deleteUser(fullName));
     }
 
-    @Test
-    void deleteUser_ExistingUser_DeletesUser() throws UserNotFoundException {
-        // Arrange
-        int userId = 1;
-        User existingUser = new User("testuser", "password", "John", "Doe", "123 Main St", "1234567890", "john.doe@example.com");
-        when(userRepository.findById(userId)).thenReturn(Optional.of(existingUser));
-
-        // Act
-        userService.deleteUser(userId);
-
-        // Assert
-        verify(userRepository, times(1)).deleteById(userId);
-    }
-
-    @Test
-    void deleteUser_NonExistingUser_ThrowsException() {
-        // Arrange
-        int nonExistingUserId = 999;
-        when(userRepository.findById(nonExistingUserId)).thenReturn(Optional.empty());
-
-        // Act & Assert
-        assertThrows(UserNotFoundException.class, () -> userService.deleteUser(nonExistingUserId));
-        verify(userRepository, never()).deleteById(nonExistingUserId);
-    }
 }
