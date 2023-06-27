@@ -11,8 +11,8 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int id;
 
     @Column(nullable = false)
     @NotBlank(message = "Username cannot be blank")

@@ -1,15 +1,16 @@
 package com.vanessa.ApartmentReservationCapstone.model;
 
 import jakarta.persistence.*;
-import java.util.Date;
+
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name = "reservations")
 public class Reservation {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     @Column(nullable = false)
     private String reservationNumber;
     @Column(nullable = false)

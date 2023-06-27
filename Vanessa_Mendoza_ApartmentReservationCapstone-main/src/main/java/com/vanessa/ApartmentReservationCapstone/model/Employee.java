@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
     @Column(nullable = false)
     @NotBlank(message = "Username cannot be blank")
     @Size(min = 7, max = 15, message = "Username must be between 7 and 15 characters")
@@ -50,13 +50,6 @@ public class Employee {
         this.emailAddress = emailAddress;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

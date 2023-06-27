@@ -38,7 +38,7 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 		Reservation newReservation = createReservation(newUser);
 		System.out.println("Created Reservation: " + newReservation);
 
-		testGetUser();
+//		testGetUser();
 	}
 
 	private User createUser() throws Exception {
@@ -55,16 +55,16 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 		return reservationService.createReservation(reservation);
 	}
 
-	private void testGetUser() {
-		User user = userService.getUserByFullName("Priscilla Chen");
-
-		if (user != null) {
-			System.out.println("User Details: " + user.getId() + " | " + user.getFullName() +
-					" | " + user.getEmailAddress());
-
-
-		} else {
-			System.out.println("User not found!");
-		}
-	}
+//	private void testGetUser() {
+//		User user = userService.getUserByFullName("Priscilla Chen");
+//
+//		if (user != null) {
+//			System.out.println("User Details: " + user.getId() + " | " + user.getFullName() +
+//					" | " + user.getEmailAddress());
+//
+//
+//		} else {
+//			System.out.println("User not found!");
+//		}
+//	}
 }
