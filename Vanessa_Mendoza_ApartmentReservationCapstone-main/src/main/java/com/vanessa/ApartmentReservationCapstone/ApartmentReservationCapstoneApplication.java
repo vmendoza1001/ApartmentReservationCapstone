@@ -42,16 +42,16 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 	}
 
 	private User createUser() throws Exception {
-		User user = new User("MLars11", "WeistFlower$", "Grace Pate", "33 Market Street", "555-8668", "vtpo01@email.com");
+		User user = new User("ChickenDinner5", "Feed43$", "Donald Duck", "378 Disney Ave", "555-7858", "hiya@email.com");
 		return userService.createUser(user);
 	}
 
 	private Reservation createReservation(User user) throws Exception {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		Date startDate = dateFormat.parse("1/28/2023");
-		Date endDate = dateFormat.parse("1/29/2023");
+		Date startDate = dateFormat.parse("1/2/2023");
+		Date endDate = dateFormat.parse("1/9/2023");
 
-		Reservation reservation = new Reservation("R5440", 3, startDate, endDate, user);
+		Reservation reservation = new Reservation("R5440", 8, startDate, endDate, user);
 		return reservationService.createReservation(reservation);
 	}
 
