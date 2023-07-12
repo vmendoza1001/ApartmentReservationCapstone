@@ -38,10 +38,8 @@ public class UserServiceTest {
                 "780-897-8977", "janice@email.com"));
         when(userRepository.findAll()).thenReturn(users);
 
-        // Act
         List<User> result = userService.getAllUsers();
 
-        // Assert
         assertEquals(2, result.size());
         assertEquals("Baily Simmons", result.get(0).getFullName());
         assertEquals("Janice Guerra", result.get(1).getFullName());
@@ -55,35 +53,28 @@ public class UserServiceTest {
                 "532-987-8977", "baily@email.com");
         when(userRepository.findByFullName(fullName)).thenReturn(Optional.of(user));
 
-        // Act
         User result = userService.getUserByFullName(fullName);
 
-        // Assert
         assertNotNull(result);
         assertEquals(fullName, result.getFullName());
     }
 
     @Test
     public void testGetUserByFullName_NonExistingFullName_ThrowsUserNotFoundException() {
-        // Arrange
         String fullName = "Non Existing User";
         when(userRepository.findByFullName(fullName)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(UserNotFoundException.class, () -> userService.getUserByFullName(fullName));
     }
 
     @Test
     public void testCreateUser_ValidUser_ReturnsCreatedUser() {
-        // Arrange
         User user = new User("Baily44", "Kangaroo6", "Baily Simmons", "456 9th Avenue, Brooklyn, NY 09857",
                 "532-987-8977", "baily@email.com");
         when(userRepository.save(user)).thenReturn(user);
 
-        // Act
         User result = userService.createUser(user);
 
-        // Assert
         assertNotNull(result);
         assertEquals("Baily Simmons", result.getFullName());
         assertEquals("baily@email.com", result.getEmailAddress());
@@ -91,16 +82,13 @@ public class UserServiceTest {
 
     @Test
     public void testUpdateUser_ExistingUser_ReturnsUpdatedUser() throws UserNotFoundException {
-        // Arrange
         User user = new User("Baily44", "Kangaroo6", "Baily Simmons", "456 9th Avenue, Brooklyn, NY 09857",
                 "532-987-8977", "baily@email.com");
         when(userRepository.existsByFullName(user.getFullName())).thenReturn(true);
         when(userRepository.save(user)).thenReturn(user);
 
-        // Act
         User result = userService.updateUser(user);
 
-        // Assert
         assertNotNull(result);
         assertEquals("Baily Simmons", result.getFullName());
         assertEquals("baily@email.com", result.getEmailAddress());
@@ -113,17 +101,14 @@ public class UserServiceTest {
                 "532-987-8977", "dale@email.com");
         when(userRepository.existsByFullName(user.getFullName())).thenReturn(false);
 
-        // Act & Assert
         assertThrows(UserNotFoundException.class, () -> userService.updateUser(user));
     }
 
     @Test
     public void testDeleteUser_NonExistingUser_ThrowsUserNotFoundException() {
-        // Arrange
         String fullName = "Non Existing User";
         when(userRepository.existsByFullName(fullName)).thenReturn(false);
 
-        // Act & Assert
         assertThrows(UserNotFoundException.class, () -> userService.deleteUser(fullName));
     }
 

@@ -29,7 +29,7 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    public Reservation getReservation(Integer id) throws ReservationNotFoundException {
+    public Reservation getReservation(int id) throws ReservationNotFoundException {
         return reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException(id));
     }
 

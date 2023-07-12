@@ -46,7 +46,7 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 	private Reservation createReservation(User user) throws Exception {
 
 
-		Reservation reservation = new Reservation("R5440", 8, "September 23, 2023", "September 24, 2023", user);
+		Reservation reservation = new Reservation(1, 8, "September 23, 2023", "September 24, 2023", user);
 		return reservationService.createReservation(reservation);
 	}
 

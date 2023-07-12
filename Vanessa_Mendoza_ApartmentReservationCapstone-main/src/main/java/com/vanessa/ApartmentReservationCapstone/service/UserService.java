@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,6 +30,9 @@ public class UserService {
     public User createUser(User user) {
         return userRepository.save(user);
     }
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
 
     public User updateUser(User user) throws UserNotFoundException {
         if (!userRepository.existsByFullName(user.getFullName())) {
@@ -42,5 +46,12 @@ public class UserService {
             throw new UserNotFoundException(fullName);
         }
         userRepository.deleteByFullName(fullName);
+    }
+    public Optional<User> loginUser(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
+
+    public Optional<User> getLoggedInUser(String username) {
+        return userRepository.findByUsername(username);
     }
 }

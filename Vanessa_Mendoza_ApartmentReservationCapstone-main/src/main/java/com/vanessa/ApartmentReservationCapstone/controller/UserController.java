@@ -27,18 +27,6 @@ public class UserController {
         return "users";
     }
 
-    @GetMapping("/users/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        return "userForm";
-    }
-
-    @PostMapping("/users")
-    public String createUser(@ModelAttribute User user) throws Exception {
-        userService.createUser(user);
-        return "redirect:/users";
-    }
-
     @GetMapping("/users/edit/{id}")
     public String editUser(@PathVariable String fullName, Model model) throws UserNotFoundException {
         User existingUser = userService.getUserByFullName(fullName);
@@ -55,6 +43,39 @@ public class UserController {
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable String fullName) throws UserNotFoundException {
         userService.deleteUser(fullName);
-        return "redirect:/users";
+        return "redirect:/usesers";
     }
+
+    @GetMapping("/register")
+    public String newUser(Model model) {
+        model.addAttribute("user", new User());
+        return "userForm";
+    }
+
+    @PostMapping("/register")
+    public String createUser(@ModelAttribute User user) throws Exception {
+        userService.createUser(user);
+        return "redirect:/login";
+    }
+
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@ModelAttribute("user") User user) {
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/profile")
+    public String showUserProfile(Model model) {
+        return "profile";
+    }
+
+    @GetMapping("/logout")
+    public String logoutUser() {
+        return "redirect:/login";
+    }
+
 }

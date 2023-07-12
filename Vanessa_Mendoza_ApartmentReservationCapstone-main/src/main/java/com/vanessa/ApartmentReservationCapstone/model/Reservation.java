@@ -9,7 +9,7 @@ public class Reservation {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private String reservationNumber;
+    private int reservationNumber;
     @Column(nullable = false)
     private int numberOfGuests;
     @Column(nullable = false)
@@ -26,7 +26,7 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(String reservationNumber, int numberOfGuests, String startDate, String endDate, User user) {
+    public Reservation(int reservationNumber, int numberOfGuests, String startDate, String endDate, User user) {
         this.reservationNumber = reservationNumber;
         this.numberOfGuests = numberOfGuests;
         this.startDate = startDate;
@@ -41,11 +41,11 @@ public class Reservation {
         this.id = id;
     }
 
-    public String getReservationNumber() {
+    public int getReservationNumber() {
         return reservationNumber;
     }
 
-    public void setReservationNumber(String reservationNumber) {
+    public void setReservationNumber(int reservationNumber) {
         this.reservationNumber = reservationNumber;
     }
 
