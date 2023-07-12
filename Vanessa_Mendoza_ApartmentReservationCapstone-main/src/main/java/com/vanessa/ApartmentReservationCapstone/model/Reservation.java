@@ -2,9 +2,6 @@ package com.vanessa.ApartmentReservationCapstone.model;
 
 import jakarta.persistence.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 @Entity
 @Table(name = "reservations")
 public class Reservation {
@@ -14,13 +11,13 @@ public class Reservation {
     @Column(nullable = false)
     private String reservationNumber;
     @Column(nullable = false)
-    private Integer numberOfGuests;
+    private int numberOfGuests;
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private String startDate;
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date endDate;
+    private String endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -29,18 +26,18 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(String reservationNumber, Integer numberOfGuests, Date startDate, Date endDate, User user) {
+    public Reservation(String reservationNumber, int numberOfGuests, String startDate, String endDate, User user) {
         this.reservationNumber = reservationNumber;
         this.numberOfGuests = numberOfGuests;
         this.startDate = startDate;
         this.endDate = endDate;
         this.user = user;
     }
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,27 +49,27 @@ public class Reservation {
         this.reservationNumber = reservationNumber;
     }
 
-    public Integer getNumberOfGuests() {
+    public int getNumberOfGuests() {
         return numberOfGuests;
     }
 
-    public void setNumberOfGuests(Integer numberOfGuests) {
+    public void setNumberOfGuests(int numberOfGuests) {
         this.numberOfGuests = numberOfGuests;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -82,15 +79,6 @@ public class Reservation {
 
     public void setUser(User user) {
         this.user = user;
-    }
-    public String getFormattedStartDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        return formatter.format(startDate);
-    }
-
-    public String getFormattedEndDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        return formatter.format(endDate);
     }
 
 

@@ -10,9 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 @SpringBootApplication(scanBasePackages = "com.vanessa")
 @ComponentScan(basePackages = "com.vanessa")
 public class ApartmentReservationCapstoneApplication implements CommandLineRunner {
@@ -42,29 +39,15 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 	}
 
 	private User createUser() throws Exception {
-		User user = new User("ChickenDinner5", "Feed43$", "Donald Duck", "378 Disney Ave", "555-7858", "hiya@email.com");
+		User user = new User("ChickenDinner5", "Feed43$", "Frank DelValle", "378 Disney Ave", "555-7858", "hiya@email.com");
 		return userService.createUser(user);
 	}
 
 	private Reservation createReservation(User user) throws Exception {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		Date startDate = dateFormat.parse("1/2/2023");
-		Date endDate = dateFormat.parse("1/9/2023");
 
-		Reservation reservation = new Reservation("R5440", 8, startDate, endDate, user);
+
+		Reservation reservation = new Reservation("R5440", 8, "September 23, 2023", "September 24, 2023", user);
 		return reservationService.createReservation(reservation);
 	}
 
-//	private void testGetUser() {
-//		User user = userService.getUserByFullName("Priscilla Chen");
-//
-//		if (user != null) {
-//			System.out.println("User Details: " + user.getId() + " | " + user.getFullName() +
-//					" | " + user.getEmailAddress());
-//
-//
-//		} else {
-//			System.out.println("User not found!");
-//		}
-//	}
 }

@@ -43,7 +43,7 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    public void deleteReservation(Integer id) throws ReservationNotFoundException {
+    public void deleteReservation(int id) throws ReservationNotFoundException {
         if(reservationRepository.findById(id).isEmpty()){
             throw new ReservationNotFoundException(id);
         }

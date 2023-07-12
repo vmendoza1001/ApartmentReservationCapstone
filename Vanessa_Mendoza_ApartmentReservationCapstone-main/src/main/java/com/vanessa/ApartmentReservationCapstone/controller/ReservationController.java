@@ -44,7 +44,7 @@ public class ReservationController {
     }
 
     @GetMapping("/reservations/edit/{id}")
-    public String editReservation(@PathVariable Integer id, Model model) throws ReservationNotFoundException {
+    public String editReservation(@PathVariable int id, Model model) throws ReservationNotFoundException {
         Reservation existingReservation = reservationService.getReservation(id);
         model.addAttribute("reservation", existingReservation);
         return "reservationForm";
@@ -57,7 +57,7 @@ public class ReservationController {
     }
 
     @GetMapping("/reservations/delete/{id}")
-    public String deleteReservation(@PathVariable Integer id) throws ReservationNotFoundException {
+    public String deleteReservation(@PathVariable int id) throws ReservationNotFoundException {
         reservationService.deleteReservation(id);
         return "redirect:/reservations";
     }
