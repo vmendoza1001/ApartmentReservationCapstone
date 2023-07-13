@@ -27,24 +27,25 @@ public class UserController {
         return "users";
     }
 
-    @GetMapping("/users/edit/{id}")
-    public String editUser(@PathVariable String fullName, Model model) throws UserNotFoundException {
-        User existingUser = userService.getUserByFullName(fullName);
-        model.addAttribute("user", existingUser);
-        return "userForm";
-    }
+//    @GetMapping("/users/edit/{fullName}")
+//    public String editUser(@PathVariable String fullName, Model model) throws UserNotFoundException {
+//        User existingUser = userService.getUserByFullName(fullName);
+//        model.addAttribute("user", existingUser);
+//        return "userForm";
+//    }
+//
+//    @PostMapping("/users/{fullName}")
+//    public String updateUser(@ModelAttribute User user) throws UserNotFoundException {
+//        userService.updateUser(user);
+//        return "redirect:/users";
+//    }
 
-    @PostMapping("/users/{id}")
-    public String updateUser(@ModelAttribute User user) throws UserNotFoundException {
-        userService.updateUser(user);
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable int id) throws UserNotFoundException {
+        userService.deleteUserById(id);
         return "redirect:/users";
     }
 
-    @GetMapping("/users/delete/{id}")
-    public String deleteUser(@PathVariable String fullName) throws UserNotFoundException {
-        userService.deleteUser(fullName);
-        return "redirect:/usesers";
-    }
 
     @GetMapping("/register")
     public String newUser(Model model) {

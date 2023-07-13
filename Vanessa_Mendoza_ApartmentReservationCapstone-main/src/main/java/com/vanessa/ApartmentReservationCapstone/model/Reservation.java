@@ -8,15 +8,13 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
+    @Column
     private int reservationNumber;
-    @Column(nullable = false)
+    @Column
     private int numberOfGuests;
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Column
     private String startDate;
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Column
     private String endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

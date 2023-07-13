@@ -104,12 +104,12 @@ public class UserServiceTest {
         assertThrows(UserNotFoundException.class, () -> userService.updateUser(user));
     }
 
-    @Test
-    public void testDeleteUser_NonExistingUser_ThrowsUserNotFoundException() {
-        String fullName = "Non Existing User";
-        when(userRepository.existsByFullName(fullName)).thenReturn(false);
-
-        assertThrows(UserNotFoundException.class, () -> userService.deleteUser(fullName));
-    }
+//    @Test
+//    public void testDeleteUser_NonExistingUser_ThrowsUserNotFoundException() {
+//        String fullName = "Non Existing User";
+//        when(userRepository.existsByFullName(fullName)).thenReturn(false);
+//
+//        assertThrows(UserNotFoundException.class, () -> userService.deleteUser(fullName));
+//    }
 
 }

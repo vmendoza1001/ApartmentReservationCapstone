@@ -35,18 +35,17 @@ public class ApartmentReservationCapstoneApplication implements CommandLineRunne
 		Reservation newReservation = createReservation(newUser);
 		System.out.println("Created Reservation: " + newReservation);
 
-//		testGetUser();
 	}
 
 	private User createUser() throws Exception {
-		User user = new User("ChickenDinner5", "Feed43$", "Frank DelValle", "378 Disney Ave", "555-7858", "hiya@email.com");
+		User user = new User("SunnyDay4", "Greece88", "Margarita Dellas", "222 Putnam Ave", "555-8789", "mdella@email.com");
 		return userService.createUser(user);
 	}
 
 	private Reservation createReservation(User user) throws Exception {
 
 
-		Reservation reservation = new Reservation(1, 8, "September 23, 2023", "September 24, 2023", user);
+		Reservation reservation = new Reservation(2, 3, "August 23, 2023", "August 24, 2023", user);
 		return reservationService.createReservation(reservation);
 	}
 

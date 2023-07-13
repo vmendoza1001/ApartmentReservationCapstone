@@ -41,11 +41,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(String fullName) throws UserNotFoundException {
-        if (!userRepository.existsByFullName(fullName)) {
-            throw new UserNotFoundException(fullName);
+    public void deleteUserById(int id) throws UserNotFoundException {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException("User with ID: " + id + " not found");
         }
-        userRepository.deleteByFullName(fullName);
+        userRepository.deleteById(id);
     }
     public Optional<User> loginUser(String username, String password) {
         return userRepository.findByUsernameAndPassword(username, password);
