@@ -1,0 +1,33 @@
+body {
+    background-color: #FFFFFF;
+    color: #564138;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #B02E0C;
+}
+
+.navbar {
+    background-color: #FFB447;
+}
+
+.navbar a {
+    color: #564138;
+}
+
+.container {
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #B02E0C;
+    color: #FFCB77;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
